@@ -17,6 +17,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBOutlet weak var sessionInfoView: UIView!
     @IBOutlet weak var sessionInfoLabel: UILabel!
     
+    @IBAction func resetTrackingButton(_ sender: Any) {
+        resetTracking()
+    }
+    
+    
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
     
