@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="Image_Recognition" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Bqi-nS-ZSy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" sceneName="CameraSetup.scn" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nki-Da-9Zf">
+                                <rect key="frame" x="0.0" y="20" width="414" height="736"/>
+                            </arscnView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrv-Ye-FIC">
+                                <rect key="frame" x="0.0" y="676" width="375" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Session Info Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRo-ic-p5a">
+                                        <rect key="frame" x="8" y="8" width="327" height="21"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="8zD-w7-car"/>
+                                    <constraint firstAttribute="height" constant="40" id="r0e-e5-4qb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Nki-Da-9Zf" firstAttribute="height" secondItem="Bqi-nS-ZSy" secondAttribute="height" id="6ep-da-DYc"/>
+                            <constraint firstItem="g6S-G5-3Ww" firstAttribute="bottom" secondItem="hrv-Ye-FIC" secondAttribute="bottom" constant="20" id="Lex-Pm-Vuh"/>
+                            <constraint firstItem="Nki-Da-9Zf" firstAttribute="width" secondItem="Bqi-nS-ZSy" secondAttribute="width" id="S5J-P3-gtB"/>
+                            <constraint firstItem="Nki-Da-9Zf" firstAttribute="centerX" secondItem="g6S-G5-3Ww" secondAttribute="centerX" id="keT-ct-nKZ"/>
+                            <constraint firstItem="g6S-G5-3Ww" firstAttribute="trailing" secondItem="hrv-Ye-FIC" secondAttribute="trailing" constant="39" id="qMt-7p-Hvc"/>
+                            <constraint firstItem="Nki-Da-9Zf" firstAttribute="top" secondItem="g6S-G5-3Ww" secondAttribute="top" id="vtu-SW-Xma"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="g6S-G5-3Ww"/>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="Nki-Da-9Zf" id="Aax-a4-pPb"/>
+                        <outlet property="sessionInfoLabel" destination="YRo-ic-p5a" id="TLB-4s-D5l"/>
+                        <outlet property="sessionInfoView" destination="hrv-Ye-FIC" id="kci-lW-6LS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="115.59220389805098"/>
+        </scene>
+    </scenes>
+</document>

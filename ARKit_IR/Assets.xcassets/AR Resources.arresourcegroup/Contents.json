@@ -1,0 +1,20 @@
+{
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "resources" : [
+    {
+      "filename" : "NewYork.arreferenceimage"
+    },
+    {
+      "filename" : "Segelboote.arreferenceimage"
+    },
+    {
+      "filename" : "VanGogh.arreferenceimage"
+    },
+    {
+      "filename" : "Wald.arreferenceimage"
+    }
+  ]
+}
