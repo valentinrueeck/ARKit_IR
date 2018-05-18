@@ -60,11 +60,11 @@
 		A32C62B320AD7729005503FA /* ARKit_IR */ = {
 			isa = PBXGroup;
 			children = (
-				A32C62CA20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift */,
-				A32C62C820AD77DA005503FA /* ARContentCreator.swift */,
 				A32C62B420AD7729005503FA /* AppDelegate.swift */,
-				A32C62B620AD7729005503FA /* art.scnassets */,
 				A32C62B820AD7729005503FA /* ViewController.swift */,
+				A32C62C820AD77DA005503FA /* ARContentCreator.swift */,
+				A32C62CA20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift */,
+				A32C62B620AD7729005503FA /* art.scnassets */,
 				A32C62BA20AD7729005503FA /* Main.storyboard */,
 				A32C62BD20AD772A005503FA /* Assets.xcassets */,
 				A32C62BF20AD772A005503FA /* LaunchScreen.storyboard */,

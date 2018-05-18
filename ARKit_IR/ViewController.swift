@@ -76,21 +76,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         node.addChildNode(highlightNode)
         highlightNode.runAction(imageHighlightAction)
         
-        let infoButtonShape = SCNPlane(width: 0.05, height: 0.05)
-        infoButtonShape.cornerRadius = 1
-        infoButtonShape.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "iOSButton")
-        infoButtonShape.firstMaterial?.isDoubleSided = true
-        let infoButtonNode = SCNNode(geometry: infoButtonShape)
-        infoButtonNode.eulerAngles.x = .pi / -2
-        infoButtonNode.name = "infoButton"
-        infoButtonNode.position = SCNVector3Make(node.position.x ,  0.001 , -Float(referenceImage.physicalSize.height / 2 + infoButtonShape.height / 2))
-        node.addChildNode(infoButtonNode)
-        infoButtonNode.runAction(rotationAction)
+        let scene = SCNScene(named: "art.scnassets/infoButton.dae")!
+        let infoButton = scene.rootNode.childNode(withName: "Button", recursively: true)!
+        infoButton.scale = SCNVector3Make(0.02, 0.02, 0.02)
+        infoButton.position = SCNVector3Make(node.position.x ,  0.001 , -Float(referenceImage.physicalSize.height / 2 + CGFloat(infoButton.scale.x / 2)))
+        infoButton.eulerAngles.x = .pi / -2
+        infoButton.runAction(rotationAction)
+        infoButton.name = "infoButton"
+        node.addChildNode(infoButton)
+
         
-        lastNode?.removeFromParentNode()
-        if(lastAnchor != nil) {
-            sceneView.session.remove(anchor: lastAnchor!)
-        }
+//        let infoButtonShape = SCNPlane(width: 0.05, height: 0.05)
+//        infoButtonShape.cornerRadius = 1
+//        infoButtonShape.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "iOSButton")
+//        infoButtonShape.firstMaterial?.isDoubleSided = true
+//        let infoButtonNode = SCNNode(geometry: infoButtonShape)
+//        infoButtonNode.eulerAngles.x = .pi / -2
+//        infoButtonNode.name = "infoButton"
+//        infoButtonNode.position = SCNVector3Make(node.position.x ,  0.001 , -Float(referenceImage.physicalSize.height / 2 + infoButtonShape.height / 2))
+//        node.addChildNode(infoButtonNode)
+//        infoButtonNode.runAction(rotationAction)
+        
+        removeLastAnchorAndNode()
         lastAnchor = imageAnchor
         lastNode = node
     }
@@ -207,9 +214,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     private func resetTracking() {
+        guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
+            fatalError("Missing Assets")
+        }
+        removeLastAnchorAndNode()
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = [.horizontal, .vertical]
+        configuration.detectionImages = referenceImages
         sceneView.session.run(configuration, options:[.resetTracking, .removeExistingAnchors])
+    }
+    
+    private func removeLastAnchorAndNode(){
+        lastNode?.removeFromParentNode()
+        if(lastAnchor != nil) {
+            sceneView.session.remove(anchor: lastAnchor!)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -217,10 +236,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if(touch.view == self.sceneView){
             print("Touch working")
             let viewTouchLocation:CGPoint = touch.location(in: sceneView)
-            guard let result = sceneView.hitTest(viewTouchLocation, options: nil).first else {
+            guard let result = sceneView.hitTest(viewTouchLocation, options: [.boundingBoxOnly: true]).first else {
                 return
             }
-            if(result.node.name == "infoButton"){
+            if(result.node.parent?.name == "infoButton"){
                 print("Touched infoButtonNode")
                 if(lastNode!.childNode(withName: "descriptionNode", recursively: false) != nil){
                     return
