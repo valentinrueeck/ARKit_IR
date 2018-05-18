@@ -121,3 +121,20 @@ public func createWebview(name: ARReferenceImage) -> SCNNode {
     webViewNode.name = "webViewNode"
     return webViewNode
 }
+
+public func createPlayButton(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> SCNNode? {
+    let scene = SCNScene(named: "art.scnassets/playButton.dae")!
+    let playButton = scene.rootNode.childNode(withName: "PlayButton", recursively: true)!
+    playButton.name = "playButton"
+    playButton.eulerAngles.y = .pi / -2
+    playButton.scale = SCNVector3Make(0.02, 0.02, 0.02)
+    playButton.position = SCNVector3Make(lastNode.position.x + 0.05, 0.001,-Float(lastAnchor.referenceImage.physicalSize.height / 2 + CGFloat(playButton.scale.x / 2)))
+//    let audioSource = getAudioSource(name: lastAnchor.referenceImage.name!)
+    let audioSource = getAudioSource(name: "Audio Tour Sample (Museum Exhibit) - Sample.mp3")
+    if(audioSource != nil){
+        let audioPlayer = SCNAudioPlayer(source: audioSource!)
+        playButton.addAudioPlayer(audioPlayer)
+        return playButton
+    }
+    return nil
+}

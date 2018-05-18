@@ -21,7 +21,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         resetTracking()
     }
     
-    
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
     
@@ -84,6 +83,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         infoButton.runAction(rotationAction)
         infoButton.name = "infoButton"
         node.addChildNode(infoButton)
+        
+        let playButton = createPlayButton(lastAnchor: imageAnchor, lastNode: node)
+        if(playButton != nil) {
+            node.addChildNode(playButton!)
+        }
         
         removeLastAnchorAndNode()
         lastAnchor = imageAnchor
@@ -153,6 +157,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             ])
     }
     
+    private func playAudioAction (audioSource: SCNAudioSource) -> SCNAction {
+        return .playAudio(audioSource, waitForCompletion: true)
+    }
+    
     private func resetTracking() {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
             fatalError("Missing Assets")
@@ -188,6 +196,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 lastNode!.addChildNode(nodes.0)
                 lastNode!.addChildNode(nodes.1)
             }
+            if(result.node.parent?.name == "playButton"){
+                print("Touched playButton")
+                let node = result.node.parent
+                let audioPlayer = node?.audioPlayers.first
+                playAudioAction(audioSource: audioPlayer!.audioSource!)
+            }
+            
             if(result.node.name == "closeButton"){
                 print("Touched closeButton")
                 lastNode!.childNode(withName: "closeButton", recursively: false)?.removeFromParentNode()
