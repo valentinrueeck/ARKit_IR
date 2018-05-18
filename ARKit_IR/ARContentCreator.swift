@@ -89,7 +89,6 @@ public func setTextView(image: ARReferenceImage) -> SKView {
 
 public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> (SCNNode, SCNNode) {
     let descriptionPlane = SCNPlane(width: lastAnchor.referenceImage.physicalSize.width, height: 0.10)
-    //descriptionPlane.firstMaterial?.diffuse.contents = createTextSprite(image: lastAnchor!.referenceImage)
     descriptionPlane.firstMaterial?.diffuse.contents = setTextView(image: lastAnchor.referenceImage)
     descriptionPlane.firstMaterial?.isDoubleSided = true
     print("\(String(describing: descriptionPlane.firstMaterial?.diffuse.contents.debugDescription))")
