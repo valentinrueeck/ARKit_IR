@@ -10,55 +10,6 @@ import Foundation
 import ARKit
 import SceneKit
 
-public func createTextSprite(image: ARReferenceImage) -> SKScene {
-    let skScene = SKScene(size: CGSize(width: 500, height: 300))
-    let rectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 500, height: 300), cornerRadius: 10)
-    rectangle.fillColor = .white
-    rectangle.strokeColor = #colorLiteral(red: 0, green: 0.01040430573, blue: 0.04792746114, alpha: 1)
-    rectangle.lineWidth = 5
-    
-    let headlineRectangle = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 500, height: 150), cornerRadius: 10)
-    headlineRectangle.fillColor = .white
-    headlineRectangle.strokeColor = .black
-    headlineRectangle.lineWidth = 5
-    
-    let textNode = SKLabelNode(text: retrieveDescriptionText(name: image.name!))
-    textNode.preferredMaxLayoutWidth = 400
-    textNode.lineBreakMode = .byWordWrapping
-    textNode.numberOfLines = textNode.text!.count / 50
-    textNode.fontSize = 20
-    textNode.fontColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    textNode.fontName = "AmericanTypewriter"
-    textNode.verticalAlignmentMode = .top
-    textNode.horizontalAlignmentMode = .left
-    textNode.position = CGPoint(x: 20, y: 300)
-    
-    let headlineNode = SKLabelNode(text: image.name!)
-    headlineNode.fontSize = 30
-    headlineNode.horizontalAlignmentMode = .center
-    headlineNode.fontColor = .black
-    headlineNode.fontName = "AmericanTypewriter"
-    headlineNode.position = CGPoint(x: 100, y: 220)
-    
-    rectangle.addChild(textNode)
-    headlineRectangle.addChild(headlineNode)
-    
-    skScene.addChild(headlineRectangle)
-    skScene.addChild(rectangle)
-    return skScene
-}
-
-public func setText(image: ARReferenceImage) -> SCNText {
-    let material = SCNMaterial()
-    material.diffuse.contents = UIColor.white
-    let text =  SCNText(string: retrieveDescriptionText(name: image.name!), extrusionDepth: 1)
-    text.font = UIFont(name: "Helvetica", size: 20)
-    text.containerFrame = CGRect(origin: .zero, size: CGSize(width: 100.0, height: 500.0))
-    text.isWrapped = true
-    text.materials = [material]
-    return text
-}
-
 public func setTextView(image: ARReferenceImage) -> SKView {
     let skView = SKView(frame: CGRect(x: 0, y: 0, width: 600, height: 500))
     skView.backgroundColor = .white
@@ -74,7 +25,6 @@ public func setTextView(image: ARReferenceImage) -> SKView {
     
     let textView = UITextView.init(frame: CGRect(x: 0, y: 100, width: 600, height: 400))
     textView.text = "\n" + retrieveDescriptionText(name: image.name!)
-    print("TEXT: \(textView.text)")
     textView.textColor = .black
     textView.backgroundColor = .white
     textView.isEditable = false
@@ -82,16 +32,16 @@ public func setTextView(image: ARReferenceImage) -> SKView {
     
     skView.addSubview(headline)
     skView.addSubview(textView)
-    print("SUBVIEWS: \(skView.subviews.count)")
 
     return skView
 }
 
-public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> (SCNNode, SCNNode) {
+public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> SCNNode {
+    let infoPlaneNode = SCNNode()
+    infoPlaneNode.name = "infoPlaneNode"
     let descriptionPlane = SCNPlane(width: lastAnchor.referenceImage.physicalSize.width, height: 0.10)
     descriptionPlane.firstMaterial?.diffuse.contents = setTextView(image: lastAnchor.referenceImage)
     descriptionPlane.firstMaterial?.isDoubleSided = true
-    print("\(String(describing: descriptionPlane.firstMaterial?.diffuse.contents.debugDescription))")
     let descriptionNode = SCNNode(geometry: descriptionPlane)
     descriptionNode.position = SCNVector3Make(0,-0.05,Float(lastAnchor.referenceImage.physicalSize.height))
     descriptionNode.eulerAngles.x = .pi / -2
@@ -104,9 +54,16 @@ public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode)
     let closeButtonNode = SCNNode(geometry: closeButton)
     closeButtonNode.name = "closeButton"
     closeButtonNode.eulerAngles.x = .pi / -2
-    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2 - 0.015), descriptionNode.position.y + 0.001, Float(descriptionPlane.height / 2 + 0.055))
+//    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2 - 0.015), descriptionNode.position.y + 0.001, Float(descriptionPlane.height / 2 + 0.055))
+
+    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2), descriptionNode.position.y + 0.001, Float(descriptionPlane.height))
+    print("closeButtonPosition: \(closeButtonNode.position)")
     
-    return (closeButtonNode, descriptionNode)
+    print("HEIGHT: \(descriptionPlane.height)")
+    
+    infoPlaneNode.addChildNode(closeButtonNode)
+    infoPlaneNode.addChildNode(descriptionNode)
+    return infoPlaneNode    
 }
 
 public func createWebview(name: ARReferenceImage) -> SCNNode {
@@ -122,19 +79,12 @@ public func createWebview(name: ARReferenceImage) -> SCNNode {
     return webViewNode
 }
 
-public func createPlayButton(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> SCNNode? {
-    let scene = SCNScene(named: "art.scnassets/playButton.dae")!
-    let playButton = scene.rootNode.childNode(withName: "PlayButton", recursively: true)!
-    playButton.name = "playButton"
-    playButton.eulerAngles.y = .pi / -2
-    playButton.scale = SCNVector3Make(0.02, 0.02, 0.02)
-    playButton.position = SCNVector3Make(lastNode.position.x + 0.05, 0.001,-Float(lastAnchor.referenceImage.physicalSize.height / 2 + CGFloat(playButton.scale.x / 2)))
-//    let audioSource = getAudioSource(name: lastAnchor.referenceImage.name!)
-    let audioSource = getAudioSource(name: "Audio Tour Sample (Museum Exhibit) - Sample.mp3")
-    if(audioSource != nil){
-        let audioPlayer = SCNAudioPlayer(source: audioSource!)
-        playButton.addAudioPlayer(audioPlayer)
-        return playButton
-    }
-    return nil
+public func createAudioButton(imageAnchor: ARImageAnchor, node: SCNNode, sceneName: String, buttonName: String) -> SCNNode {
+    let scene = SCNScene(named: "art.scnassets/\(sceneName)")!
+    let button = scene.rootNode.childNode(withName: "\(buttonName)", recursively: true)!
+    button.name = "\(buttonName)"
+    button.eulerAngles.y = .pi / -2
+    button.scale = SCNVector3Make(0.02, 0.02, 0.02)
+    button.position = SCNVector3Make(node.parent!.position.x + Float(imageAnchor.referenceImage.physicalSize.width / 2 + CGFloat(button.scale.x + 0.01)), node.parent!.position.y, node.parent!.position.z)
+    return button
 }

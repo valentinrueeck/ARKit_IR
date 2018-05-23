@@ -20,6 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBAction func resetTrackingButton(_ sender: Any) {
         resetTracking()
     }
+
     
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
@@ -84,11 +85,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         infoButton.name = "infoButton"
         node.addChildNode(infoButton)
         
-        let playButton = createPlayButton(lastAnchor: imageAnchor, lastNode: node)
-        if(playButton != nil) {
-            node.addChildNode(playButton!)
+        if(isAudioSourceAvailable(imageName: referenceImage.name!)){
+            let playButton = createAudioButton(imageAnchor: imageAnchor, node: node, sceneName: "playButton.dae", buttonName: "PlayButton")
+            node.addChildNode(playButton)
         }
-        
+
         removeLastAnchorAndNode()
         lastAnchor = imageAnchor
         lastNode = node
@@ -157,10 +158,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             ])
     }
     
-    private func playAudioAction (audioSource: SCNAudioSource) -> SCNAction {
-        return .playAudio(audioSource, waitForCompletion: true)
-    }
-    
     private func resetTracking() {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
             fatalError("Missing Assets")
@@ -187,30 +184,36 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             guard let result = sceneView.hitTest(viewTouchLocation, options: [.boundingBoxOnly: true]).first else {
                 return
             }
+            if(result.node.name == "closeButton"){
+                print("Touched closeButton")
+                lastNode!.childNode(withName: "infoPlaneNode", recursively: true)?.removeFromParentNode()
+            }
+            if(result.node.name == "descriptionNode"){
+                print("Touched descriptionNode")
+            }
             if(result.node.parent?.name == "infoButton"){
                 print("Touched infoButtonNode")
                 if(lastNode!.childNode(withName: "descriptionNode", recursively: false) != nil){
                     return
                 }
                 let nodes = createDescriptionPlane(lastAnchor: lastAnchor!, lastNode: lastNode!)
-                lastNode!.addChildNode(nodes.0)
-                lastNode!.addChildNode(nodes.1)
+                lastNode!.addChildNode(nodes)
             }
-            if(result.node.parent?.name == "playButton"){
+            if(result.node.parent?.name == "PlayButton"){
                 print("Touched playButton")
-                let node = result.node.parent
-                let audioPlayer = node?.audioPlayers.first
-                playAudioAction(audioSource: audioPlayer!.audioSource!)
+                let playButtonNode = result.node.parent
+                let audioPlayer = SCNAudioPlayer(source: getAudioSource(imageName: lastAnchor!.referenceImage.name!)!)
+                let pauseButton = createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "pauseButton.dae", buttonName: "PauseButton")
+                lastNode?.replaceChildNode(playButtonNode!, with: pauseButton)
+                pauseButton.addAudioPlayer(audioPlayer)
             }
-            
-            if(result.node.name == "closeButton"){
-                print("Touched closeButton")
-                lastNode!.childNode(withName: "closeButton", recursively: false)?.removeFromParentNode()
-                lastNode!.childNode(withName: "descriptionNode", recursively: false)?.removeFromParentNode()
+            if(result.node.parent?.name == "PauseButton") {
+                print("Touched PauseButton")
+                let pauseButton = result.node.parent!
+                pauseButton.removeAllAudioPlayers()
+                lastNode?.replaceChildNode(pauseButton, with: createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "playButton.dae", buttonName: "PlayButton"))
             }
-            if(result.node.name == "descriptionNode"){
-                print("Touched descriptionNode")
-            }
+
         }
     }
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A307689E20AF10120085B622 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A307689D20AF10120085B622 /* AudioController.swift */; };
-		A3103C2920AF21A2007E3737 /* Audio Tour Sample (Museum Exhibit) - Sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A3103C2820AF21A2007E3737 /* Audio Tour Sample (Museum Exhibit) - Sample.mp3 */; };
 		A32C62B520AD7729005503FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C62B420AD7729005503FA /* AppDelegate.swift */; };
 		A32C62B720AD7729005503FA /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A32C62B620AD7729005503FA /* art.scnassets */; };
 		A32C62B920AD7729005503FA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C62B820AD7729005503FA /* ViewController.swift */; };
@@ -17,11 +16,12 @@
 		A32C62C120AD772A005503FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A32C62BF20AD772A005503FA /* LaunchScreen.storyboard */; };
 		A32C62C920AD77DA005503FA /* ARContentCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C62C820AD77DA005503FA /* ARContentCreator.swift */; };
 		A32C62CB20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C62CA20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift */; };
+		A34E12ED20B58B5D00098A73 /* Segelboote_Audio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A34E12EC20B58B5D00098A73 /* Segelboote_Audio.mp3 */; };
+		A34E12F120B58BD800098A73 /* VanGogh_Audio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A34E12F020B58BD800098A73 /* VanGogh_Audio.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A307689D20AF10120085B622 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
-		A3103C2820AF21A2007E3737 /* Audio Tour Sample (Museum Exhibit) - Sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Audio Tour Sample (Museum Exhibit) - Sample.mp3"; sourceTree = "<group>"; };
 		A32C62B120AD7729005503FA /* ARKit_IR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_IR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A32C62B420AD7729005503FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A32C62B620AD7729005503FA /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -32,6 +32,8 @@
 		A32C62C220AD772A005503FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A32C62C820AD77DA005503FA /* ARContentCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARContentCreator.swift; sourceTree = "<group>"; };
 		A32C62CA20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaintingDescriptionTextRetriever.swift; sourceTree = "<group>"; };
+		A34E12EC20B58B5D00098A73 /* Segelboote_Audio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Segelboote_Audio.mp3; sourceTree = "<group>"; };
+		A34E12F020B58BD800098A73 /* VanGogh_Audio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = VanGogh_Audio.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +71,8 @@
 				A307689D20AF10120085B622 /* AudioController.swift */,
 				A32C62C820AD77DA005503FA /* ARContentCreator.swift */,
 				A32C62CA20AD77E3005503FA /* PaintingDescriptionTextRetriever.swift */,
-				A3103C2820AF21A2007E3737 /* Audio Tour Sample (Museum Exhibit) - Sample.mp3 */,
+				A34E12EC20B58B5D00098A73 /* Segelboote_Audio.mp3 */,
+				A34E12F020B58BD800098A73 /* VanGogh_Audio.mp3 */,
 				A32C62B620AD7729005503FA /* art.scnassets */,
 				A32C62BA20AD7729005503FA /* Main.storyboard */,
 				A32C62BD20AD772A005503FA /* Assets.xcassets */,
@@ -137,8 +140,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3103C2920AF21A2007E3737 /* Audio Tour Sample (Museum Exhibit) - Sample.mp3 in Resources */,
+				A34E12F120B58BD800098A73 /* VanGogh_Audio.mp3 in Resources */,
 				A32C62B720AD7729005503FA /* art.scnassets in Resources */,
+				A34E12ED20B58B5D00098A73 /* Segelboote_Audio.mp3 in Resources */,
 				A32C62C120AD772A005503FA /* LaunchScreen.storyboard in Resources */,
 				A32C62BE20AD772A005503FA /* Assets.xcassets in Resources */,
 				A32C62BC20AD7729005503FA /* Main.storyboard in Resources */,
