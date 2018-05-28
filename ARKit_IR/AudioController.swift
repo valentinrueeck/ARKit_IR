@@ -16,11 +16,8 @@ func getAudioSource(imageName: String) -> SCNAudioSource? {
 }
 
 func isAudioSourceAvailable(imageName: String) -> Bool {
-    let path = Bundle.main.path(forResource: "\(imageName)_Audio.mp3", ofType: nil)!
-    return FileManager.default.fileExists(atPath: path)
+    let path = Bundle.main.path(forResource: "\(imageName)_Audio.mp3", ofType: nil)
+    return path != nil
 }
 
-func getAudioPlayer(imageName: String) -> SCNAudioPlayer {
-    return SCNAudioPlayer(source: getAudioSource(imageName: imageName)!)
-}
 

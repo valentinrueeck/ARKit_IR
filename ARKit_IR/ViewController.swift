@@ -186,7 +186,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             }
             if(result.node.name == "closeButton"){
                 print("Touched closeButton")
-                lastNode!.childNode(withName: "infoPlaneNode", recursively: true)?.removeFromParentNode()
+                lastNode!.childNode(withName: "descriptionNode", recursively: true)?.removeFromParentNode()
             }
             if(result.node.name == "descriptionNode"){
                 print("Touched descriptionNode")

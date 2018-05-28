@@ -10,7 +10,7 @@ import Foundation
 import ARKit
 import SceneKit
 
-public func setTextView(image: ARReferenceImage) -> SKView {
+public func setUiTextView(image: ARReferenceImage) -> SKView {
     let skView = SKView(frame: CGRect(x: 0, y: 0, width: 600, height: 500))
     skView.backgroundColor = .white
     
@@ -37,33 +37,26 @@ public func setTextView(image: ARReferenceImage) -> SKView {
 }
 
 public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode) -> SCNNode {
-    let infoPlaneNode = SCNNode()
-    infoPlaneNode.name = "infoPlaneNode"
     let descriptionPlane = SCNPlane(width: lastAnchor.referenceImage.physicalSize.width, height: 0.10)
-    descriptionPlane.firstMaterial?.diffuse.contents = setTextView(image: lastAnchor.referenceImage)
+    descriptionPlane.firstMaterial?.diffuse.contents = setUiTextView(image: lastAnchor.referenceImage)
     descriptionPlane.firstMaterial?.isDoubleSided = true
+    descriptionPlane.cornerRadius = 0.01
+
     let descriptionNode = SCNNode(geometry: descriptionPlane)
     descriptionNode.position = SCNVector3Make(0,-0.05,Float(lastAnchor.referenceImage.physicalSize.height))
+
     descriptionNode.eulerAngles.x = .pi / -2
     descriptionNode.name = "descriptionNode"
-    descriptionPlane.cornerRadius = 0.01
     
     let closeButton = SCNPlane(width: 0.02, height: 0.02)
     closeButton.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "close-window")
     closeButton.firstMaterial?.isDoubleSided = true
     let closeButtonNode = SCNNode(geometry: closeButton)
     closeButtonNode.name = "closeButton"
-    closeButtonNode.eulerAngles.x = .pi / -2
-//    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2 - 0.015), descriptionNode.position.y + 0.001, Float(descriptionPlane.height / 2 + 0.055))
-
-    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2), descriptionNode.position.y + 0.001, Float(descriptionPlane.height))
-    print("closeButtonPosition: \(closeButtonNode.position)")
-    print("closeButtonWorldP: \(closeButtonNode.worldPosition)")
-    print("descriptionPlane Width: \(descriptionPlane.width)")
+    closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2 - closeButton.width / 2), Float(descriptionPlane.height / 2 - closeButton.height / 2 ), 0.001)
     
-    infoPlaneNode.addChildNode(closeButtonNode)
-    infoPlaneNode.addChildNode(descriptionNode)
-    return infoPlaneNode    
+    descriptionNode.addChildNode(closeButtonNode)
+    return descriptionNode
 }
 
 public func createWebview(name: ARReferenceImage) -> SCNNode {
