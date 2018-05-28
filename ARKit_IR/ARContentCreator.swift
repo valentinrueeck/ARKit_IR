@@ -58,8 +58,8 @@ public func createDescriptionPlane(lastAnchor: ARImageAnchor, lastNode: SCNNode)
 
     closeButtonNode.position = SCNVector3Make(Float(descriptionPlane.width / 2), descriptionNode.position.y + 0.001, Float(descriptionPlane.height))
     print("closeButtonPosition: \(closeButtonNode.position)")
-    
-    print("HEIGHT: \(descriptionPlane.height)")
+    print("closeButtonWorldP: \(closeButtonNode.worldPosition)")
+    print("descriptionPlane Width: \(descriptionPlane.width)")
     
     infoPlaneNode.addChildNode(closeButtonNode)
     infoPlaneNode.addChildNode(descriptionNode)
@@ -88,3 +88,4 @@ public func createAudioButton(imageAnchor: ARImageAnchor, node: SCNNode, sceneNa
     button.position = SCNVector3Make(node.parent!.position.x + Float(imageAnchor.referenceImage.physicalSize.width / 2 + CGFloat(button.scale.x + 0.01)), node.parent!.position.y, node.parent!.position.z)
     return button
 }
+

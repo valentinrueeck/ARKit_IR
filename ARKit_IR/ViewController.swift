@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.preferredFramesPerSecond = 30
+        sceneView.preferredFramesPerSecond = 60
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -200,18 +200,22 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 lastNode!.addChildNode(nodes)
             }
             if(result.node.parent?.name == "PlayButton"){
-                print("Touched playButton")
+                print("Touched PlayButton")
                 let playButtonNode = result.node.parent
                 let audioPlayer = SCNAudioPlayer(source: getAudioSource(imageName: lastAnchor!.referenceImage.name!)!)
                 let pauseButton = createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "pauseButton.dae", buttonName: "PauseButton")
                 lastNode?.replaceChildNode(playButtonNode!, with: pauseButton)
+                audioPlayer.didFinishPlayback = {
+                    print("Finished Playback")
+                    self.lastNode?.replaceChildNode(pauseButton, with: playButtonNode!)
+                }
                 pauseButton.addAudioPlayer(audioPlayer)
             }
             if(result.node.parent?.name == "PauseButton") {
                 print("Touched PauseButton")
                 let pauseButton = result.node.parent!
                 pauseButton.removeAllAudioPlayers()
-                lastNode?.replaceChildNode(pauseButton, with: createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "playButton.dae", buttonName: "PlayButton"))
+                self.lastNode?.replaceChildNode(pauseButton, with: createAudioButton(imageAnchor: self.lastAnchor!, node: self.lastNode!, sceneName: "playButton.dae", buttonName: "PlayButton"))
             }
 
         }
