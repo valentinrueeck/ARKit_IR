@@ -97,12 +97,12 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" indicatorStyle="black" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wa-4R-NHJ">
                                         <rect key="frame" x="8" y="207" width="359" height="213"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">Wilkommen im Museum of Art!             Um die App zu nutzen halten sie die Kamera auf die verschiedenen Bilder in unserem Museum. Dabei werden klickbare Elemente in das Kamerabild eingefügt. Dadurch erhalten sie Informationen sowie einen Audioguide zu den jeweiligen Gemälden</string>
+                                        <string key="text">Wilkommen im Museum of Art!             Um die App zu nutzen halten Sie die Kamera auf die verschiedenen Bilder in unserem Museum. Dabei werden klickbare Elemente in das Kamerabild eingefügt, wodurch Sie Informationen sowie einen Audioguide zu den jeweiligen Gemälden erhalten.</string>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbP-Dj-E0x">
+                                    <button opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbP-Dj-E0x">
                                         <rect key="frame" x="263" y="587" width="104" height="52"/>
                                         <color key="backgroundColor" red="0.32432830041119715" green="0.57491892404312095" blue="0.77100874352331605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
