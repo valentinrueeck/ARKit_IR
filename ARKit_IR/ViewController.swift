@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBAction func resetTrackingButton(_ sender: Any) {
         resetTracking()
     }
-    
+
     
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
@@ -28,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.preferredFramesPerSecond = 30
+        sceneView.preferredFramesPerSecond = 60
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,19 +84,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         infoButton.runAction(rotationAction)
         infoButton.name = "infoButton"
         node.addChildNode(infoButton)
+        
+        if(isAudioSourceAvailable(imageName: referenceImage.name!)){
+            let playButton = createAudioButton(imageAnchor: imageAnchor, node: node, sceneName: "playButton.dae", buttonName: "PlayButton")
+            node.addChildNode(playButton)
+        }
 
-        
-//        let infoButtonShape = SCNPlane(width: 0.05, height: 0.05)
-//        infoButtonShape.cornerRadius = 1
-//        infoButtonShape.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "iOSButton")
-//        infoButtonShape.firstMaterial?.isDoubleSided = true
-//        let infoButtonNode = SCNNode(geometry: infoButtonShape)
-//        infoButtonNode.eulerAngles.x = .pi / -2
-//        infoButtonNode.name = "infoButton"
-//        infoButtonNode.position = SCNVector3Make(node.position.x ,  0.001 , -Float(referenceImage.physicalSize.height / 2 + infoButtonShape.height / 2))
-//        node.addChildNode(infoButtonNode)
-//        infoButtonNode.runAction(rotationAction)
-        
         removeLastAnchorAndNode()
         lastAnchor = imageAnchor
         lastNode = node
@@ -104,31 +97,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     //Update AR content
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
-//        guard let planeNode = node.childNode(withName: "planeNode", recursively: true) else {return}
-//
-//        let cameraZ = sceneView.session.currentFrame!.camera.transform.columns.3.z
-//        let scaling = 0.2 + (cameraZ * 5)
-//        var scale: SCNVector3
-////        var position: SCNVector3
-//        if(scaling < 0){
-//            scale = SCNVector3Make(0.2 ,0.2, planeNode.scale.z)
-////            position = SCNVector3Make(node.position.x - 0.25, node.position.y, node.position.z)
-//        } else {
-//            scale = SCNVector3Make(0.2 + (cameraZ * 5), 0.2 + (cameraZ * 5), planeNode.scale.z)
-////            position = SCNVector3Make(node.position.x - ( 0.25 *  (1 + cameraZ)), node.position.y, node.position.z)
-//        }
-//
-//        DispatchQueue.main.async {
-//            self.sessionInfoLabel.text = "\(0.2 + cameraZ * 5) \(node.position.x - ( 0.25 *  (1 + cameraZ)))"
-//        }
-//
-//        planeNode.scale = scale
-////        planeNode.position = position
-//        print("ANCHORS IN SCENE: \(sceneView.session.currentFrame!.anchors.count)")
-//        print("NODES IN SCENE: \(sceneView.scene.rootNode.childNodes.count)")
-        DispatchQueue.main.async {
-            self.sessionInfoLabel.text = "ANCHORS: \(self.sceneView.session.currentFrame!.anchors.count) NODES: \(self.sceneView.scene.rootNode.childNodes.count)"
-        }
         
     }
 
@@ -168,30 +136,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
     
     private func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
-//        let message: String
-//
-//        switch trackingState {
-//        case .normal where frame.anchors.isEmpty:
-//            message = "Move the device around to detect horizontal surfaces."
-//
-//        case .notAvailable:
-//            message = "Tracking unavailable."
-//
-//        case .limited(.excessiveMotion):
-//            message = "Tracking limited - Move the device more slowly."
-//
-//        case .limited(.insufficientFeatures):
-//            message = "Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions."
-//
-//        case .limited(.initializing):
-//            message = "Initializing AR session."
-//
-//        default:
-//            message = ""
-//        }
-//
-//        sessionInfoLabel.text = message
-//        sessionInfoView.isHidden = message.isEmpty
+
     }
     
     var imageHighlightAction: SCNAction {
@@ -239,25 +184,40 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             guard let result = sceneView.hitTest(viewTouchLocation, options: [.boundingBoxOnly: true]).first else {
                 return
             }
+            if(result.node.name == "closeButton"){
+                print("Touched closeButton")
+                lastNode!.childNode(withName: "descriptionNode", recursively: true)?.removeFromParentNode()
+            }
+            if(result.node.name == "descriptionNode"){
+                print("Touched descriptionNode")
+            }
             if(result.node.parent?.name == "infoButton"){
                 print("Touched infoButtonNode")
                 if(lastNode!.childNode(withName: "descriptionNode", recursively: false) != nil){
                     return
                 }
                 let nodes = createDescriptionPlane(lastAnchor: lastAnchor!, lastNode: lastNode!)
-                lastNode!.addChildNode(nodes.0)
-                lastNode!.addChildNode(nodes.1)
-//                lastNode!.childNode(withName: "infoButton", recursively: false)?.removeFromParentNode()
+                lastNode!.addChildNode(nodes)
             }
-            if(result.node.name == "closeButton"){
-                print("Touched closeButton")
-                lastNode!.childNode(withName: "closeButton", recursively: false)?.removeFromParentNode()
-                lastNode!.childNode(withName: "descriptionNode", recursively: false)?.removeFromParentNode()
+            if(result.node.parent?.name == "PlayButton"){
+                print("Touched PlayButton")
+                let playButtonNode = result.node.parent
+                let audioPlayer = SCNAudioPlayer(source: getAudioSource(imageName: lastAnchor!.referenceImage.name!)!)
+                let pauseButton = createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "pauseButton.dae", buttonName: "PauseButton")
+                lastNode?.replaceChildNode(playButtonNode!, with: pauseButton)
+                audioPlayer.didFinishPlayback = {
+                    print("Finished Playback")
+                    self.lastNode?.replaceChildNode(pauseButton, with: playButtonNode!)
+                }
+                pauseButton.addAudioPlayer(audioPlayer)
             }
-            if(result.node.name == "descriptionNode"){
-                print("Touched descriptionNode")
-//                lastNode!.replaceChildNode(lastNode!.childNode(withName: "descriptionNode", recursively: false)!, with: createWebview(name: lastAnchor!.referenceImage))
+            if(result.node.parent?.name == "PauseButton") {
+                print("Touched PauseButton")
+                let pauseButton = result.node.parent!
+                pauseButton.removeAllAudioPlayers()
+                self.lastNode?.replaceChildNode(pauseButton, with: createAudioButton(imageAnchor: self.lastAnchor!, node: self.lastNode!, sceneName: "playButton.dae", buttonName: "PlayButton"))
             }
+
         }
     }
 }
