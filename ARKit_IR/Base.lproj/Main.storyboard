@@ -90,24 +90,24 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Museum of Art" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CgN-zO-yuz">
                                         <rect key="frame" x="8" y="41" width="359" height="158"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="33"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wa-4R-NHJ">
-                                        <rect key="frame" x="8" y="207" width="359" height="323"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">Wilkommen im Museum of Art! Um die App zu nutzen halten sie die Kamera auf die verschiedenen Bilder in unserem Museum. Dabei werden klickbare Elemente in das Kamerabild eingefügt. Dadurch erhalten sie Informationen sowie einen Audioguide zu den jeweiligen Gemälden</string>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" indicatorStyle="black" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wa-4R-NHJ">
+                                        <rect key="frame" x="8" y="207" width="359" height="213"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">Wilkommen im Museum of Art!             Um die App zu nutzen halten sie die Kamera auf die verschiedenen Bilder in unserem Museum. Dabei werden klickbare Elemente in das Kamerabild eingefügt. Dadurch erhalten sie Informationen sowie einen Audioguide zu den jeweiligen Gemälden</string>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GbP-Dj-E0x">
                                         <rect key="frame" x="263" y="587" width="104" height="52"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.32432830041119715" green="0.57491892404312095" blue="0.77100874352331605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Los geht's!">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.95375269808048646" green="1" blue="0.99438963056771568" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="BV1-FR-VrT" kind="presentation" id="Fdn-cB-94Y"/>
@@ -121,7 +121,7 @@
                                     <constraint firstAttribute="trailing" secondItem="CgN-zO-yuz" secondAttribute="trailing" constant="8" id="43c-zB-0xM"/>
                                     <constraint firstAttribute="bottom" secondItem="GbP-Dj-E0x" secondAttribute="bottom" constant="8" id="4pQ-TA-v1n"/>
                                     <constraint firstItem="CgN-zO-yuz" firstAttribute="top" secondItem="hcu-pQ-4nD" secondAttribute="top" constant="41" id="9Cn-pA-mXc"/>
-                                    <constraint firstAttribute="bottom" secondItem="7wa-4R-NHJ" secondAttribute="bottom" constant="117" id="AoS-df-skr"/>
+                                    <constraint firstAttribute="bottom" secondItem="7wa-4R-NHJ" secondAttribute="bottom" constant="227" id="ABT-mc-ehj"/>
                                     <constraint firstAttribute="trailing" secondItem="GbP-Dj-E0x" secondAttribute="trailing" constant="8" id="OcU-Sp-3S4"/>
                                     <constraint firstAttribute="bottom" secondItem="CgN-zO-yuz" secondAttribute="bottom" constant="448" id="Osy-1s-Yt0"/>
                                     <constraint firstItem="7wa-4R-NHJ" firstAttribute="top" secondItem="hcu-pQ-4nD" secondAttribute="top" constant="207" id="XSz-rP-dyz"/>
@@ -153,7 +153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5M-rt-NDO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-988" y="113"/>
+            <point key="canvasLocation" x="-988" y="112.89355322338831"/>
         </scene>
     </scenes>
     <resources>
