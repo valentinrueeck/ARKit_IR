@@ -20,7 +20,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBAction func resetTrackingButton(_ sender: Any) {
         resetTracking()
     }
-
     
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
@@ -28,7 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.preferredFramesPerSecond = 60
+        sceneView.preferredFramesPerSecond = 30
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -97,7 +96,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     //Update AR content
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
-        
+        DispatchQueue.main.async {
+            self.sessionInfoLabel.text = "Nodes: \(self.sceneView.scene.rootNode.childNodes.count) Anchors: \(self.sceneView.session.currentFrame!.anchors.count)"
+        }
+
     }
 
     //ARSession Delegate
