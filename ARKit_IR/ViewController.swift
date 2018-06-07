@@ -178,6 +178,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    @IBAction func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        print("GESTURE LISTENER")
+        guard let nodeToScale = lastNode?.childNode(withName: "descriptionNode", recursively: true)  else { return }
+        if sender.state == .changed {
+            let pinchScaleX: CGFloat = sender.scale * CGFloat((nodeToScale.scale.x))
+            let pinchScaleY: CGFloat = sender.scale * CGFloat((nodeToScale.scale.y))
+            let pinchScaleZ: CGFloat = sender.scale * CGFloat((nodeToScale.scale.z))
+            nodeToScale.scale = SCNVector3Make(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
+            sender.scale = 1
+            
+        }
+        if sender.state == .ended { }
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         if(touch.view == self.sceneView){

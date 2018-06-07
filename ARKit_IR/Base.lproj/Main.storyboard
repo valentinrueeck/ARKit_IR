@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Htt-7c-Iks">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Htt-7c-Iks">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,6 +21,10 @@
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0qy-bo-qca">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ywa-P7-mhl" appends="YES" id="5ML-Qy-u9I"/>
+                                </connections>
                             </arscnView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vEE-P5-6tx">
                                 <rect key="frame" x="0.0" y="329" width="667" height="46"/>
@@ -72,6 +76,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="ywa-P7-mhl">
+                    <connections>
+                        <action selector="onPinchGesture:" destination="BV1-FR-VrT" id="e0j-w4-Uds"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-202" y="113"/>
         </scene>
@@ -193,18 +202,23 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="1cT-Ur-hN4"/>
+                                        <exclude reference="XMS-F3-9Iq"/>
                                         <exclude reference="Ywg-hF-e3P"/>
                                         <exclude reference="dxu-Hi-eNf"/>
                                         <exclude reference="fak-Dh-g6B"/>
                                         <exclude reference="mV4-9S-c4U"/>
                                         <exclude reference="xD4-rW-Wrn"/>
-                                        <exclude reference="1cT-Ur-hN4"/>
-                                        <exclude reference="XMS-F3-9Iq"/>
                                         <exclude reference="GlR-yT-lxL"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
+                                        <include reference="1cT-Ur-hN4"/>
+                                        <exclude reference="3VL-Bl-CTW"/>
+                                        <include reference="XMS-F3-9Iq"/>
+                                        <exclude reference="dgK-n9-ebl"/>
+                                        <exclude reference="zOM-ro-UWZ"/>
                                         <exclude reference="45I-SC-8P7"/>
                                         <include reference="Ywg-hF-e3P"/>
                                         <include reference="dxu-Hi-eNf"/>
@@ -212,11 +226,6 @@
                                         <include reference="mV4-9S-c4U"/>
                                         <include reference="xD4-rW-Wrn"/>
                                         <exclude reference="yr1-m4-bxJ"/>
-                                        <include reference="1cT-Ur-hN4"/>
-                                        <exclude reference="3VL-Bl-CTW"/>
-                                        <include reference="XMS-F3-9Iq"/>
-                                        <exclude reference="dgK-n9-ebl"/>
-                                        <exclude reference="zOM-ro-UWZ"/>
                                         <include reference="GlR-yT-lxL"/>
                                         <exclude reference="O9e-Gu-egy"/>
                                         <exclude reference="Zgb-w2-A9x"/>
