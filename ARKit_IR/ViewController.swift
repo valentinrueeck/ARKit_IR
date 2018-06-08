@@ -219,6 +219,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 print("Touched PlayButton")
                 let playButtonNode = result.node.parent
                 let audioPlayer = SCNAudioPlayer(source: getAudioSource(imageName: lastAnchor!.referenceImage.name!)!)
+                audioPlayer.audioSource?.isPositional = true;
                 let pauseButton = createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "pauseButton.dae", buttonName: "PauseButton")
                 lastNode?.replaceChildNode(playButtonNode!, with: pauseButton)
                 audioPlayer.didFinishPlayback = {
