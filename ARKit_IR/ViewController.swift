@@ -20,7 +20,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     @IBAction func resetTrackingButton(_ sender: Any) {
         resetTracking()
     }
-
     
     var lastNode :SCNNode?
     var lastAnchor: ARImageAnchor?
@@ -28,7 +27,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
-        sceneView.preferredFramesPerSecond = 60
+        sceneView.preferredFramesPerSecond = 30
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -97,7 +96,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     //Update AR content
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor){
-        
+        DispatchQueue.main.async {
+            self.sessionInfoLabel.text = "Nodes: \(self.sceneView.scene.rootNode.childNodes.count) Anchors: \(self.sceneView.session.currentFrame!.anchors.count)"
+        }
+
     }
 
     //ARSession Delegate
@@ -176,6 +178,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    @IBAction func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        print("GESTURE LISTENER")
+        guard let nodeToScale = lastNode?.childNode(withName: "descriptionNode", recursively: true)  else { return }
+        if sender.state == .changed {
+            let pinchScaleX: CGFloat = sender.scale * CGFloat((nodeToScale.scale.x))
+            let pinchScaleY: CGFloat = sender.scale * CGFloat((nodeToScale.scale.y))
+            let pinchScaleZ: CGFloat = sender.scale * CGFloat((nodeToScale.scale.z))
+            nodeToScale.scale = SCNVector3Make(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
+            sender.scale = 1
+            
+        }
+        if sender.state == .ended { }
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         if(touch.view == self.sceneView){
@@ -203,6 +219,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 print("Touched PlayButton")
                 let playButtonNode = result.node.parent
                 let audioPlayer = SCNAudioPlayer(source: getAudioSource(imageName: lastAnchor!.referenceImage.name!)!)
+                audioPlayer.audioSource?.isPositional = true;
                 let pauseButton = createAudioButton(imageAnchor: lastAnchor!, node: lastNode!, sceneName: "pauseButton.dae", buttonName: "PauseButton")
                 lastNode?.replaceChildNode(playButtonNode!, with: pauseButton)
                 audioPlayer.didFinishPlayback = {
